@@ -1,6 +1,8 @@
 
 Setup an run:
 
+Add names to mask_names.csv if needed
+
     Localy on django dev server:
         1. Use python 3.8 or above, recommended to use virtual env.
         2. pip install -r requirements.txt
