@@ -18,7 +18,7 @@ Add names to **mask_names.csv** if needed
 # Notes
   The server passes requests to https://postman-echo.com in this way:
   https://<server_p>/<endpoint> => https://postman-echo.com/<endpoint>
-  so actually https://<server_p>/post will work. But this allows quiqlly to change routing to any othe server. Just update this code in engine/views.py:
+  so actually https://<server_p>/post will work. But this allows quiqlly to change routing to any othe server. Just update this code in **engine/views.py**:
 ```python
     
     PATH_TO_SERVER = {
