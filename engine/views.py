@@ -33,6 +33,7 @@ class ProxyView(View):
         return False
 
     def __replace_confident(self, match):
+        """replace confident data with asterisks"""
         match = match.group()
         if re.match(SSN_REGEX, match):
             if self.__is_valid_ssn(match):

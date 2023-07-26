@@ -25,22 +25,35 @@ class SSNUtils:
         logging.debug(f'checking provided provided area and group')
         if cls.AREA_TO_HIGHEST_RANK is None:
             cls.__load_groups()
+        if area_number not in cls.AREA_TO_HIGHEST_RANK:
+            logging.debug(f'area {area_number} not found in groups')
+            return False
+        if group_number > len(ORDERED_GROUPS):
+            logging.debug(f'group {group_number} not found in groups')
+            return False
         group_rank = ORDERED_GROUPS[group_number - 1]
         curent_maximum_group_rank = cls.AREA_TO_HIGHEST_RANK[area_number]
+        # Dynamic checks for area and group numbers
         return group_rank < curent_maximum_group_rank
         
     @staticmethod
     def is_dummy_ssn(ssn_num_str: str):
+        """List of know valid but dummy ssn numbers"""
         ssn_num = int(ssn_num_str.replace('-', ''))
         return ssn_num_str in ("078051120","111111111","123456789","219099999") or\
                 (ssn_num >= 987654320 and ssn_num <= 987654329) or ssn_num == 999999999
 
     @classmethod
     def __load_groups(cls):
+        """lazy load of groups
+            loads groups from file
+            creates dict with area as key and highest group rank as value
+        """
         if cls.AREA_TO_HIGHEST_RANK is None:
             with open(GROUPS_FILE) as groups_file:
                 cls.AREA_TO_HIGHEST_RANK = {}
                 for line in groups_file:
+                    # remove asterisks. it usless for us
                     parts = line.strip().replace('*', ' ').split()
                     if parts and re.match(r'^\d{3}', parts[0]):
                         for i in range(0, len(parts), 2):
